@@ -1,4 +1,4 @@
-# 🤔 💭 Learning from Visual Pattern Completion
+# Learning from Visual Pattern Completion 🤔
 
 > Inspired by the cortical modularization and hippocampal pattern completion, we propose a self-supervised controllable generation (**SCG**) framework to achieve pattern completion and generate images.
 
@@ -10,17 +10,18 @@
 
 [Zhiqiang Chen*](https://github.com/dongrisuihan), [Guofan Fan*](https://github.com/Asterisci), [Jinying Gao*](https://github.com/JY-Gao), [Lei Ma](https://nbic.pku.edu.cn/rcdw/kyry/02c5f5ce8e254b1e82a48bebd0a24c33.htm), [Bo Lei](https://github.com/Bolei-engram), [Tiejun Huang](https://idm.pku.edu.cn/tjhuang), [Shan Yu](https://people.ucas.ac.cn/~yushan?language=en)
 
-![img](docs/intro.png)
+![img](docs/intro.webp)
 
 ## 📰 News
 
 - 🍾 Sep, 2024: [**SCG**](https://github.com/BAAI-Brain-Inspired-Group/OPEN-Vis-ControlSD/) is accepted by NeurIPS 2024, congratulations! We will release offical version as soon, please check in homepage.
 - 🎉 Apr, 2024: For those interested, we update a [pre-release code](https://gitee.com/chenzq/control-net-main) in Gitee.
 
+## 📄 Motivation
 
-## 📄 Intro
+Our original motivation is to propose and validate a novel self-supervised pipeline to achieve broad generalizations.
 
-Our model is built upon our trained modular Hypercolumn-like features and ControlNet. The hypercolumn-like features are trained using a self-supervised method. Based on these features, we train several ControlNets. This approach utilizes a comprehensive modular feature set that is automatically learned and differentiated, resulting in robustness and generalization transfer capabilities. By configuring and combining appropriate control modules, it can effectively transfer to features without prior learning. We exclusively train them on the COCO dataset, yet they demonstrate the ability to generalize across various image styles, including those generated from ancient rock paintings, Chinese monochromes, oil paintings, scribbles, and more. Notably, it maintains strong performance even when dealing with lower-quality ancient rock paintings and oil paintings. 
+This framework comprises two components: a modular autoencoder and a conditional generator. Given the extensive research on conditional generation, we leverage the existing, mature ControlNet for this aspect. Our core contribution lies in designing a modular autoencoder based on proposed equivariance constraint, successfully enabling the network to spontaneously develop relatively independent and highly complementary modular features. These features are crucial for subsequent conditional generation.
 
 ## 🛠️ Installation
 
@@ -52,56 +53,58 @@ hyperconfig:
     size: 512
 ```
 
-## 🖼️ Results
+During inferance phrase, we use a single A100 GPU and it requires about 11G RAM to run it per image.
 
-**To find more result, please refer to our papers.**
+## 📲 Modular Autoencoder
+
+![img](docs/ModularAutoencoder.webp)
+
+We propose a equivariance constraint for our modular autoencoder. The equivariance loss Lequ is the core of the equivariant constraint, primarily serving to increase independence between modules and correlation (or symmetry) within modules. The symmetry loss Lsym further enhances the correlation (or symmetry) of features within modules and suppresses the emergence of multiple unrelated features within the same module. The learned feature is visualized in the following:
+
+![img](docs/ModularDiff2.webp)
+
+## 🎯 Results
+
+**We compress the raw image to enhance web experience. For raw images and more results, please refer to our paper.**
+
+The models are trained on only COCO dataset and test on multiple tasks.
+
+### 🐻 Conditional generation on COCO
+
+![img](docs/cocoval2.webp)
 
 The first line are the origin image and the prompt. The second line are conditions of multiple hypercolumn and canny. The last line are the generated images
 
-![img](docs/hc.png)
+### 🐻‍❄️ 0-shot generation
 
-### Specific hypercolumn
+- 🐻‍❄️Scribble
+![img](docs/scribble.webp)
 
-#### Hypercolumn 0
-![img](docs/img0.png)
+- 🐨 Oil painting and Chinese washing and ink painting
+![img](docs/painting1.webp)
 
-#### Hypercolumn 1
-![img](docs/img1.png)
+- 🐼 Ancient graffiti
+![img](docs/bihua2.webp)
 
-#### Hypercolumn 2
-![img](docs/img2.png)
+### 🐨 Comparison with ControlNet
 
-#### Hypercolumn 3
-![img](docs/img3.png)
+![img](docs/figr1_00.webp)
 
-#### Hypercolumn 4
-![img](docs/img4.png)
+### 🐼 More tasks under 0-shot generalization abilities
 
-#### Hypercolumn 5
-![img](docs/img5.png)
+![img](docs/SR_Dehaze.webp)
 
-### Painting
+### 🦥 Manipulation
 
-#### Ancient rock painting
-![img](docs/bihua.png)
+![img](docs/maniplate.webp)
 
-Oil painting. The first line are the origin images. The second line are the conditions. The last line are the generated images.
+## 🦚 Ablation study
 
-- Canny
-![img](docs/youhua1.png)
+![img](docs/figr3_00.webp)
 
-- Hypercolumn
-![img](docs/youhua2.png)
+## 🦁 Discussion
 
-- Scribble
-![img](docs/scribble.png)
-
-#### Chinese monochromes. 
-
-The first line are the origin images. The second line are the conditions by hypercolumn. The last two line are the generated images.
-![img](docs/shuimo1.png)
-
-![img](docs/shuimo2.png)
+We propose SCG and experimentally demonstrate that it can spontaneously emerge (or 0-shot generalize) various abilities, including super-resolution, dehazing, saturation and contrast manipulation, as well as conditional generation based on diverse styles such as oil paintings, ink paintings, ancient graffiti, sketches, and LineArt. Furthermore, SCG possesses two significant potentials: (1) Leveraging its self-supervision, SCG can further scale up its data and models to benefit from the scaling law, enhancing its basic capabilities; (2) Subsequently, SCG can be fine-tuned for specific tasks, leading to improved performance on particular tasks. These potentials suggest that SCG has the potential to become a foundation model for controllable generation. This framework comprises two components: a modular autoencoder and a conditional generator. Given the extensive research on conditional generation, we leverage the existing, mature ControlNet for this aspect. Our core contribution lies in designing a modular autoencoder based on proposed equivariance constraint, successfully enabling the network to spontaneously develop relatively independent and highly complementary modular features. These features are crucial for subsequent conditional generation.
 
 ## 📌 Citation
 If you find our work helpful for your research. Please consider citing our paper.
@@ -114,7 +117,6 @@ If you find our work helpful for your research. Please consider citing our paper
   year={2024}
 }
 ```
-
 
 ## 📕 Acknowledgement and License
 
