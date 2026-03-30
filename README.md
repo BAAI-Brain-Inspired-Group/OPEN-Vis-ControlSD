@@ -32,6 +32,8 @@ conda activate control
 
 Cause our work is based on ControlNet, please refer to [ControlNet Docs](https://github.com/lllyasviel/ControlNet?tab=readme-ov-file#production-ready-pretrained-models) to install environment.
 
+
+### checkpoints
 ckpt:https://huggingface.co/Wistons/OPEN-Vis-ControlSD
 
 
