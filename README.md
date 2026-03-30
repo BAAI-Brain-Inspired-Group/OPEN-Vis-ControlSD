@@ -25,7 +25,8 @@ This framework comprises two components: a modular autoencoder and a conditional
 
 ## 🛠️ Installation
 
-```conda env create -f environment.yaml
+```
+conda env create -f environment.yaml
 conda activate control
 ```
 
