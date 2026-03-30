@@ -25,7 +25,12 @@ This framework comprises two components: a modular autoencoder and a conditional
 
 ## 🛠️ Installation
 
+conda env create -f environment.yaml
+conda activate control
+
 Cause our work is based on ControlNet, please refer to [ControlNet Docs](https://github.com/lllyasviel/ControlNet?tab=readme-ov-file#production-ready-pretrained-models) to install environment.
+
+ckpt:https://huggingface.co/Wistons/OPEN-Vis-ControlSD
 
 
 ## 🚀 Quickstart
